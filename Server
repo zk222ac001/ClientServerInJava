@@ -1,0 +1,54 @@
+// Imports all classes from the java.io package, which includes classes
+// for input and output operations.
+import java.io.*;
+// Imports all classes from the java.net package, which includes classes
+// for networking operations.
+import java.net.*;
+// Class Declaration:  Declares a public class named Server.
+public class Server {
+// Main Method: public static void main(String args[]):
+// The main method is the entry point of the program.
+//throws IOException: Indicates that this method might throw an IOException,
+// which must be handled or declared.
+    public static void main(String args[]) throws IOException
+    {
+        // STEP NO : 1 ...........Server Socket Creation:..........................
+        //  Creates a server socket that listens on port 9090.
+        ServerSocket serverSocket = new ServerSocket(9090);
+        //Prints a message indicating that the server is running and waiting
+        // for a client to connect.
+        System.out.println("Server is running and waiting for client connection...");
+
+        // STEP NO : 2 ...........Accept Client Connection:..........................
+        // Accept incoming client connection
+        // Waits for a client to connect and returns a Socket object for communication.
+        Socket clientSocket = serverSocket.accept();
+        // Prints a message indicating that a client has connected.
+        System.out.println("Client connected!");
+
+        // STEP NO : 3 ...............Setup Input and Output Streams:......................
+        // Setup input and output streams for communication with the client
+        // Sets up a BufferedReader to read text from the client's input stream.
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream()));
+        // Sets up a PrintWriter to send text to the client's output stream.
+        // The true parameter enables auto-flushing.
+        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+        // STEP NO : 4 ......Read Message from Client:.........................
+        //  Reads a line of text sent by the client.
+        String message = reader.readLine();
+        // Prints the received message to the console.
+        System.out.println("Client says: " + message);
+
+        // STEP NO : 5 ......Send Response to Client:.........................
+        // Sends a response back to the client.
+        out.println("Message received by the server.");
+
+        // STEP NO : 6 ........ Close Sockets ........................
+        // : Closes the client socket to free up resources.
+        clientSocket.close();
+        // Closes the server socket to free up resources
+        serverSocket.close();
+    }
+}

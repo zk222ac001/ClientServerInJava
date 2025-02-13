@@ -1,0 +1,52 @@
+import java.io.*;
+import java.net.*;
+
+public class ChatClient {
+    public static void main(String args[]) throws IOException
+    {
+        // Step no 1:........... Create a Socket ............................
+        // Socket socket = new Socket("localhost", 9090);: This line creates a
+        // socket to connect to the server running on the local machine (localhost)
+        // at port number 9090. The Socket class represents the client-side endpoint
+        // for communication.
+        Socket socket = new Socket("localhost", 9090);
+
+        // Step no 2:........... Setup Output Stream ............................
+
+        // Setup output stream to send data to the server
+        // PrintWriter out = new PrintWriter(socket.getOutputStream(), true);:
+        // This line sets up a PrintWriter to send data to the server.
+        // The socket.getOutputStream() method retrieves the output stream
+        // associated with the socket. The true parameter enables auto-flushing,
+        // ensuring that data is sent immediately after each println call.
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+        // Step no 3:........... Setup Intput Stream ............................
+        // Setup input stream to receive data from the server
+        //BufferedReader in = new BufferedReader(new InputStreamReader
+        // (socket.getInputStream()));: This line sets up a BufferedReader to
+        // receive data from the server. The socket.getInputStream() method
+        // retrieves the input stream associated with the socket.
+        // The InputStreamReader converts the byte stream to a character stream,
+        // and the BufferedReader adds buffering for efficient reading.
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
+
+        // Step no 4:........... Send Message to the Server ............................
+        // Send message to the server
+        out.println("Hello from client!");
+
+        // Step no 5:........... Recieved Response from the Server ............................
+        //  This line reads a line of text sent by the server.
+        String response = in.readLine();
+        //This line prints the server's response to the console.
+        System.out.println("Server says: " + response);
+        // Close the socket
+        socket.close();
+        /*
+        In summary, this client-side code establishes a connection to the server,
+        sends a message, receives a response, and then closes the connection
+        * */
+    }
+}
